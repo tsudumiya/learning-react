@@ -181,6 +181,11 @@ HTTPリクエストは保留中(pending)、成功(fulfilled)、そして失敗(r
 ▼ codesandbox<br>
 https://codesandbox.io/s/hands-on-react-8-4-3-usefetchhutuku1-g22or8
 
+このGitHubUserコンポーネントをアプリケーションに組み込んでいく。
+ログインIDの入力フォームであるSearchFormコンポーネントを作り、入力されたIDによって表示結果を切り替える。
+
+▼ codesandbox<br>
+https://codesandbox.io/s/hands-on-react-8-4-3-usefetchhutuku2-idn1m0?file=/src/App.js:0-1444
 
 ### 4.4 fetchコンポーネント
 
