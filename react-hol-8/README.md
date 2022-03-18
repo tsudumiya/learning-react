@@ -1,7 +1,9 @@
 # 8.データ
+
 ## 概要
+
 Reactコンポーネントにおけるデータの扱い方を理解する。<br>
-以下目次とコードのメモ。
+以下目次とコードの簡易メモ。
 
 ## 1. データの受信
 
@@ -313,4 +315,4 @@ https://codesandbox.io/s/hands-on-react-8-5-2-fu-shu-norikuesuto-uotahuorurikues
 これをウォーターフォールに比して並列リクエストと呼ぶ。
 
 ▼ codesandbox<br>
-https://codesandbox.io/s/hands-on-react-8-5-3-fu-shu-norikuesuto-bing-lie-rikuesuto-6c5erw
+https://codesandbox.io/s/hands-on-react-8-5-3-fu-shu-norikuesuto-bing-lie-rikuesuto-6c5erw?file=/src/App.js
