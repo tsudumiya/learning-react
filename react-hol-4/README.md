@@ -1,70 +1,254 @@
-# Getting Started with Create React App
+# 4章 Reactの基本
+Reactの最小単位である要素とコンポーネントについて。
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 4.1 使用するライブラリ
+ブラウザでReactを動作させるには、ReactとReactDOMという2つのライブラリが最低限必要。<br>
+Reactはビューを構築するためのライブラリ。<br>
+ReactDOMは、Reactで構築されたビューをブラウザで描画するためのライブラリ。
 
-## Available Scripts
+▼ CDNからのダウンロードとベースのHTML
 
-In the project directory, you can run:
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Pure React Samples</title>
+  </head>
+  <body>
+    <!-- Target Container -->
+    <div id="react-container"></div>
 
-### `npm start`
+    <!-- React Library & React DOM-->
+    <script
+      crossorigin
+      src="https://unpkg.com/react@16/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+    ></script>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+    <script>
+      // ここにReactのコードを記述する
+    </script>
+  </body>
+</html>
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 4.2 React要素
 
-### `npm test`
+ReactはDOM APIの呼び出しを一手に引き受けてくれるライブラリ。<br>
+開発者は直接DOM APIを呼び出す必要はなく、その代わり、Reactに対して「何をしたいのか」が記述された指示書のようなものを渡します。<br>
+その指示書をReact要素と呼びます。
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+▼ React要素を作成するコード
 
-### `npm run build`
+```js
+React.createElement("h1", { id: "recipe-0" }, "Baked Salmon");
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+最初の引数は作成したい要素のタイプ。二番目の引数は要素のプロパティ。三番目の引数は子要素です。
+上記の要素をReactは以下のようなDOM要素に変換する。
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```html
+<h1 id="recipe-0">Baked Salmon</h1>
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 4.2.1 ReactDOMで要素をブラウザに描画する
+ReactDOMはReact要素をブラウザに描画するためのライブラリ。
+ここではReactDOMのrenderメソッドを使用して要素を描画してみましょう。
 
-### `npm run eject`
+```js
+const dish = React.createElement("h1", null, "Baked Salmon");
+ReactDOM.render(dish, document.getElementById("root"));
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+最初の引数にReact要素を、二番目の引数に要素を追加するルートノードを指定します。
+この結果、以下のようなDOM要素が描画されます。
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```html
+<body>
+  <div id="root">
+    <h1>baked Salmon</h1>
+  </div>
+</body>
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+このように、ReactDOMはReact要素をDOM要素に変換します。<br>
+複数のReact要素を描画することも可能。
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```js
+const dish = React.createElement("h1", null, "Baked Salmon");
+const dessert = React.createElement("h2", null, "Coconut Cream Pie");
+ReactDOM.render([dish, dessert], document.getElementById("root"));
+```
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 4.2.2 子要素
+Reactでは子要素はprops.childrenに格納される。
+React要素を子要素として指定することも可能になっており、そのようにReact要素を他のReact要素の子要素として追加することで、
+ネストした要素のツリーを構築できる。
 
-### Code Splitting
+以下はレシピのHTMLで、材料のリストをul要素としてマークアップしたものです。
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```html
+<ul>
+  <li>2 lb salmon</li>
+  <li>5 sprigs fresh rosemary</li>
+  <li>2 tablespoons olive oil</li>
+  <li>2 small lemons</li>
+  <li>1 teaspoon kosher salt</li>
+  <li>4 cloves of chopped garlic</li>
+</ul>
+```
 
-### Analyzing the Bundle Size
+これをReactで描画するには、以下のようにReact.createElementで呼び出して、ネストしたReact要素のツリーを作成します。
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```js
+// JavaScript Code with Pure React
+const list = React.createElement(
+    "ul",
+    null,
+    React.createElement("li", null, "2 lb salmon"),
+    React.createElement("li", null, "5 sprigs fresh rosemary"),
+    React.createElement("li", null, "2 tablespoons olive oil"),
+    React.createElement("li", null, "2 small lemons"),
+    React.createElement("li", null, "1 teaspoon kosher salt"),
+    React.createElement("li", null, "4 cloves of chopped garlic")
+);
+console.log(list);
+ReactDOM.render(list, document.getElementById("root"));
+```
 
-### Making a Progressive Web App
+▼ codesandbox<br>
+https://codesandbox.io/s/cranky-hugle-8gv2mj?file=/src/index.js
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### 4.2.3 配列から子要素を生成する
+Reactの利点のひとつとして、UIからデータを分離できることが挙げられる。
 
-### Deployment
+```js
+React.createElement(
+    "ul",
+    null,
+    React.createElement("li", null, "2 lb salmon"),
+    React.createElement("li", null, "5 sprigs fresh rosemary"),
+    React.createElement("li", null, "2 tablespoons olive oil"),
+    React.createElement("li", null, "2 small lemons"),
+    React.createElement("li", null, "1 teaspoon kosher salt"),
+    React.createElement("li", null, "4 cloves of chopped garlic")
+);
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+上記のコードで重複している部分を取り除くと、以下の材料のリストが抽出できる。
 
-### `npm run build` fails to minify
+```js
+const items = [
+  "2 lb salmon",
+  "5 sprigs fresh rosemary",
+  "2 tablespoons olive oil",
+  "2 small lemons",
+  "1 teaspoon kosher salt",
+  "4 cloves of chopped garlic"
+];
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+これをArray.mapでReact要素の配列に変換する。
+
+```js
+React.createElement(
+  "ul",
+  { className: "ingredients" },
+  items.map((ingredient, i) =>
+    React.createElement("li", { key: i }, ingredient)
+  )
+);
+```
+
+要素の配列を別の要素の子要素に設定する場合、配列の各要素はkeyプロパティを持つ必要がある。
+
+▼ codesandbox<br>
+https://codesandbox.io/s/hands-on-react-4-2-3-pei-lie-karazi-yao-su-wochou-chu-suru-77erfh?file=/src/index.js
+
+
+## 4.3 Reactコンポーネント
+ユーザーインターフェースは、ボタンやリスト、見出しといった部品により構成されている。
+たとえばレシピのページで、異なる3つの料理のレシピが表示されているとする。個々のレシピの内容は異なるが、使われているUI部品は同じです。
+
+この部品のことをReactではコンポーネントと呼びます。
+コンポーネントの設計では、そのコンポーネントがスケールするかどうかを必ず考慮しなければいけない。
+
+Reactではコンポーネントの実体は関数。各コンポーネントはReact要素を返す関数として実装される。
+
+```js
+function IngredientsList(){
+  return (
+    React.createElement(
+      "ul",
+      { className: "ingredients" },
+      items.map((ingredient, i) =>
+        React.createElement("li", { key: i }, ingredient)
+      )
+    )
+  )
+}
+
+ReactDOM.render(
+  React.createElement(IngredientsList, null, null), 
+  document.getElementById("root")
+);
+```
+https://codesandbox.io/s/hands-on-react-4-3-reactkonponento-bzxr3y?file=/index.html
+
+ここでは、分離したデータをitemsプロパティに設定しています。
+そして上記コードでまだ改善すべき点があります。
+コンポーネント内でitemsをグローバル変数として参照していますが、これはReactのpropsオブジェクト経由で参照すべきです。
+propsオブジェクトはコンポーネントの関数に引数として渡されます。
+
+```js
+function IngredientsList(props){
+  return (
+    React.createElement(
+      "ul",
+      { className: "ingredients" },
+      props.items.map((ingredient, i) =>
+        React.createElement("li", { key: i }, ingredient)
+      )
+    )
+  )
+}
+ReactDOM.render(
+  React.createElement(IngredientsList, { items }, null), 
+  document.getElementById("root")
+);
+```
+
+さらに、デストラクチャリングを使えばコードがより簡素になります。
+
+```js
+function IngredientsList({items}){
+  return (
+    React.createElement(
+      "ul",
+      { className: "ingredients" },
+      items.map((ingredient, i) =>
+        React.createElement("li", { key: i }, ingredient)
+      )
+    )
+  )
+}
+ReactDOM.render(
+  React.createElement(IngredientsList, { items }, null), 
+  document.getElementById("root")
+);
+```
+https://codesandbox.io/s/hands-on-react-4-3-reactkonponento2-knj9qd?file=/index.html
+
+これで、材料のリストを表示するために必要なコードはすべてIngredientsListコンポーネントに集約されました。
+コンポーネントは描画の単位であると同時に、開発の単位でもあります。
+
+
+
