@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import SearchForm from './SearchForm';
+import GitHubUser from './GitHubUser';
+import UserRepositories from './UserRepositories';
+import RepositoryReadme from './RepositoryReadme';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default function App() {
+    const [login, setLogin] = useState('tsudumiya');
+    const [repo, setRepo] = useState('learning-react');
+    return (
+        <>
+            <SearchForm value={login} onSearch={setLogin} />
+            <GitHubUser login={login} />
+            <UserRepositories
+                login={login}
+                selectedRepo={repo}
+                onSelect={setRepo}
+            />
+            <RepositoryReadme login={login} repo={repo} />
+        </>
+    );
 }
-
-export default App;
