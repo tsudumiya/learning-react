@@ -5,7 +5,10 @@ Reactコンポーネントにおけるデータの扱い方を理解する。<br
 
 ## 1. データの受信
 
+GitHubではユーザーアカウントの基本情報をAPI経由で取得できる。
+
 ### 1.1 チェーンの場合
+
 ```js
 fetch(`https://api.github.com/users/moonhighway`)
   .then(response => response.json())
@@ -30,6 +33,7 @@ async function requestGithubUser(githubLogin){
 ```
 
 ### 1.3 Reactコンポーネントでの使い方
+
 ▼ codesandbox<br>
 https://codesandbox.io/s/hands-on-react-1-detanoshou-xin-reactkonponentodenoshi-ifang-h7nzb2?file=/src/App.js
 
@@ -43,6 +47,7 @@ fetch("create/user", {
 ```
 
 ### 2.1 fetchを使ったファイルアップロード
+
 ```js
 const formData = new FormData();
 formData.append("username", "moontahoe");
@@ -56,6 +61,7 @@ fetch("/create/user", {
 ```
 
 ### 2.2 リクエストの認証
+
 ```js
 fetch(`https://api.github.com/users/${login}`,{
   method: "GET",
@@ -66,6 +72,7 @@ fetch(`https://api.github.com/users/${login}`,{
 ```
 
 ## 3. データの保存(local storage)
+
 ```js
 // ローカルストレージからデータを読み込む
 const loadJSON = key =>
@@ -80,6 +87,7 @@ const saveJSON = (key, data) =>
 https://codesandbox.io/s/hands-on-react-8-3-detanobao-cun-k5c76y?file=/src/App.js
 
 ## 4. 非同期リクエストの状態管理
+
 HTTPリクエストもPromiseと同様、3つの状態を持つ。
 保留中(Pending)、成功(fulfilled)、失敗(rejected)。
 
@@ -90,6 +98,7 @@ HTTPリクエストもPromiseと同様、3つの状態を持つ。
 https://codesandbox.io/s/hands-on-react-8-4-fei-tong-qi-rikuesutonozhuang-tai-guan-li-kfqs5g?file=/src/App.js
 
 ### 4.1 レンダープロップ
+
 ▼ 典型的なリスト表示のパターン
 
 ```js
@@ -149,6 +158,7 @@ renderItemを使って描画内容を指定できるようにする。
 https://codesandbox.io/s/usual-list4-zremfr
 
 ### 4.2 仮想リスト
+
 仮想リストを使わずに、5000個のdiv要素を作成した場合。
 
 ▼ codesandbox<br>
@@ -162,6 +172,7 @@ https://codesandbox.io/s/hands-on-react-8-4-2-jia-xiang-hua-risutoreact-window-y
 
 
 ### 4.3 useFetchフック
+
 HTTPリクエストは保留中(pending)、成功(fulfilled)、そして失敗(rejected)の3つの状態を持つ。
 アプリケーションでfetch APIを使ってリクエストを送信するたびに、これらの状態を管理するコードを繰り返し書くことになるので、ここで再利用可能なカスタムフックを実装。
 
@@ -170,6 +181,7 @@ https://codesandbox.io/s/hands-on-react-8-4-3-usefetchhutuku1-g22or8
 
 
 ### 4.4 fetchコンポーネント
+
 データだけでなくUIも含めて共通化したい場合がある。
 たとえばロード中に表示されるアイコンは、コンポーネントごとに異なっている必要はなく、アプリケーションで共通のアイコンを表示すればいい。
 また、エラーが発生した場合の処理方法も、通常はアプリケーション内で共通。
@@ -208,6 +220,7 @@ function LoadingSpinner() {
 ```
 
 ## 5. 複数のリクエスト
+
 ここまでの例では、Githubからユーザーの基本情報のみ取得したが、
 ユーザーのリポジトリの情報も表示したい場合はどうすればいいか？
 リポジトリのデータは異なるAPIで提供されているため、複数のHTTPリクエストを発行する必要がある。
@@ -237,6 +250,7 @@ export const useIterator = (items = [], initialIndex = 0) => {
 ```
 
 ### 5.1 関数のメモ化
+
 useIteratorのリファクタリング。 以下はフックの戻り値をメモ化したもの。
 
 ▼ hooks.js
@@ -268,6 +282,7 @@ export const useIterator = (items = [], initialIndex = 0) => {
 https://codesandbox.io/s/hands-on-react-8-5-1-fu-shu-norikuesuto-iteretotoguan-shu-nomemohua-u5tl25
 
 ### 5.2 ウォーターフォールリクエスト
+
 ここでさらにウォーターフォールを追加する。
 ユーザー情報とリポジトリの取得が成功した場合、先頭のリポジトリのREADME.mdファイルを取得。
 その後ユーザーの操作により別のリポジトリが選択されるたびに、該当するリポジトリのREADME.mdファイルを取得する。
@@ -284,6 +299,7 @@ $ npm i react-markdown
 https://codesandbox.io/s/hands-on-react-8-5-2-fu-shu-norikuesuto-uotahuorurikuesuto-r462d7?file=/src/GitHubUser.js
 
 #### 5.2.1 ネットワーク遅延のシミュレーション
+
 ブラウザの開発ツールを開くと、「Network」タブですべてのリクエストを見ることができる。
 さらに下位のタブの中からリクエストの種類を選んで個々のHTTPリクエストのタイムラインを見ることが可能。
 「XHR」(XMLHttpRequest)を指定してフィルタリングすると、fetchのリクエストのみが表示される。
@@ -291,6 +307,7 @@ https://codesandbox.io/s/hands-on-react-8-5-2-fu-shu-norikuesuto-uotahuorurikues
 タイムラインを見ることで4つのリクエストが逐次処理されているのが分かる。
 
 ### 5.3 並列リクエスト
+
 アプリケーションによっては複数のリクエストをひとつずつ順番に送信するのではなく、
 一度に送信した方がよい場合がある。
 これをウォーターフォールに比して並列リクエストと呼ぶ。
