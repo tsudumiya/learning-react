@@ -1,6 +1,7 @@
 # 8.データ
 ## 概要
-Reactコンポーネントにおけるデータの扱い方を理解する。
+Reactコンポーネントにおけるデータの扱い方を理解する。<br>
+以下目次とコードのメモ。
 
 ## 1. データの受信
 
@@ -79,6 +80,11 @@ const saveJSON = (key, data) =>
 https://codesandbox.io/s/hands-on-react-8-3-detanobao-cun-k5c76y?file=/src/App.js
 
 ## 4. 非同期リクエストの状態管理
+HTTPリクエストもPromiseと同様、3つの状態を持つ。
+保留中(Pending)、成功(fulfilled)、失敗(rejected)。
+
+先ほど実装したGithubUserコンポーネントは、これらすべての状態をカバーできていない。
+保留中や失敗の状態をUIで表現するための変更を加えたコードが以下。
 
 ▼ codesandbox<br>
 https://codesandbox.io/s/hands-on-react-8-4-fei-tong-qi-rikuesutonozhuang-tai-guan-li-kfqs5g?file=/src/App.js
