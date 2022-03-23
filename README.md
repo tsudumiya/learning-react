@@ -1,11 +1,13 @@
 # Learning React
 
-## Recipe
+## recipes
+- JSX
+https://codesandbox.io/s/react-hol-recipes-2ypyw6?file=/src/App.js
 
-## StarRating
+## star rating
 
-## ColorList
+## color list
 
-## GitHubUser
+## github user
 
-## Corporate
+## corporate
