@@ -14,6 +14,10 @@ https://codesandbox.io/s/react-hol-recipes-2ypyw6?file=/src/App.js
 https://codesandbox.io/s/react-hol-starrating-uyrrd4
 
 ## color list
+- アプリケーション全体のステート管理
+- ユーザーの操作をコンポーネントツリーの下から上に伝える
+- ref(useRef)
+- コンテキスト
 
 ## github user
 - データの取得
