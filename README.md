@@ -11,5 +11,8 @@ https://codesandbox.io/s/react-hol-recipes-2ypyw6?file=/src/App.js
 ## color list
 
 ## github user
+- データの取得
+- カスタムフック
+- 複数のリクエスト
 
 ## corporate
