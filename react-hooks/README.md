@@ -86,7 +86,8 @@ export default function App() {
 依存配列の同一性を保証するために使う。
 useEffectなどの依存配列に参照値を使うと同一のインスタンスとはみなされないため、再描画が発生する。useMemoを使えばそれを防げる。
 
-useMemoは関数と依存配列を引数に取る。useMemoの依存配列はchildrenになることに注意。
+useMemoは関数と依存配列を引数に取る。<br>
+注:useMemoの依存配列にchildrenを指定している点に注意。
 
 ```js
 import React, { useState, useEffect, useMemo } from "react";
@@ -172,7 +173,7 @@ export default function App() {
 
 
 ## useLayoutEffect
-ブラウザのPaint処理よりも前に何かしたい時に使うフック。
+ブラウザのPaint処理よりも前に何かしたい時に使うフック。<br>
 たとえばブラウザのウィンドウサイズをもとにコンポーネントのサイズを計算したい時など。
 
 ```js
