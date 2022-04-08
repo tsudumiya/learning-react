@@ -24,8 +24,13 @@ https://codesandbox.io/s/react-hol-starrating-uyrrd4
 ◆ codesandbox<br>
 https://codesandbox.io/s/react-hol-colorlist-iffnqt?file=/src/index.js
 
-## フック
-- 
+## react-hooks
+- useEffect
+- useMemo
+- useCallback
+- useLayoutEffect
+- フックの使い方に関するルール
+- useReducer
 
 ## github-user
 - データの取得
