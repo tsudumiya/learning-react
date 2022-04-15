@@ -1,0 +1,10 @@
+{
+  "/Layout": "pages/Layout.html",
+  "/": "pages/index.html",
+  "/_app": "pages/_app.js",
+  "/pets": "pages/pets.js",
+  "/_error": "pages/_error.js",
+  "/Header": "pages/Header.html",
+  "/_document": "pages/_document.js",
+  "/404": "pages/404.html"
+}
